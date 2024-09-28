@@ -13,7 +13,7 @@ import type { Router, Navigation } from '@toolpad/core';
 
 
 import Login from './LoginPage'; // Adjust the path as necessary
-import Signup from './Signup'; // Adjust the path as necessary
+import Signup from './Signup'; 
 import StudentDetails from './Studentdetail';
 
 const NAVIGATION: Navigation = [
@@ -57,7 +57,7 @@ const NAVIGATION: Navigation = [
   },
   {
     segment: 'add-class',
-    title: 'Add Class',
+    title: 'remove Class',
     icon: <ClassIcon />,
   },
   {
