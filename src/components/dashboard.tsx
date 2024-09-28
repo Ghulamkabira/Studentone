@@ -171,7 +171,7 @@ export default function DashboardLayoutBasic(props: DemoProps) {
       pathname,
       searchParams: new URLSearchParams(),
       navigate: (path) => {
-        setPathname(path); // Update the pathname to the new path
+        setPathname(path); 
       },
     };
   }, [pathname]);
