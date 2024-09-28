@@ -11,7 +11,7 @@ import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import type { Router, Navigation } from '@toolpad/core';
 
-// Import your existing Login and Signup components
+
 import Login from './LoginPage'; // Adjust the path as necessary
 import Signup from './Signup'; // Adjust the path as necessary
 import StudentDetails from './Studentdetail';
