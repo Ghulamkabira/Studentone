@@ -129,8 +129,7 @@ const demoTheme = createTheme({
   },
 });
 
-function DemoPageContent({ pathname }) {
-  // Render different components based on the current pathname
+
   switch (pathname) {
     case '/signup':
       return <Signup />;
