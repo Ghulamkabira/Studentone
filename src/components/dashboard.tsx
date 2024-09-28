@@ -12,7 +12,7 @@ import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import type { Router, Navigation } from '@toolpad/core';
 
 
-import Login from './LoginPage'; // Adjust the path as necessary
+import Login from './LoginPage';
 import Signup from './Signup'; 
 import StudentDetails from './Studentdetail';
 
