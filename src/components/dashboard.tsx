@@ -9,14 +9,17 @@ import AssessmentIcon from '@mui/icons-material/Assessment'; // For Reports
 import SettingsIcon from '@mui/icons-material/Settings'; // For Settings
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
-import type { Router, Navigation } from '@toolpad/core';
-
-
-import Login from './LoginPage';
-import Signup from './Signup'; 
+import Login from './LoginPage'; // Adjust the path as necessary
+import Signup from './Signup'; // Adjust the path as necessary
 import StudentDetails from './Studentdetail';
+import Paper from '@mui/material/Paper';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
+import StudentDataGrid from './StudentDataGrid'; // Import the DataGrid component
 
-const NAVIGATION: Navigation = [
+// Navigation items
+const NAVIGATION = [
   {
     kind: 'header',
     title: 'Main items',
@@ -57,7 +60,7 @@ const NAVIGATION: Navigation = [
   },
   {
     segment: 'add-class',
-    title: 'remove Class',
+    title: 'Add Class',
     icon: <ClassIcon />,
   },
   {
@@ -85,20 +88,17 @@ const NAVIGATION: Navigation = [
     title: 'User Management',
   },
   {
-    segment: 'signup', // Ensure this is correctly defined
-    title: 'Signup',
-    icon: <SettingsIcon />,
-  },
-  {
-    segment: 'login',
-    title: 'Login',
-    icon: <SettingsIcon />,
-  },
-  {
     segment: 'studentdetail',
     title: 'Studentdetail',
     icon: <SettingsIcon />,
   },
+  // {
+  //   segment: 'studentdatagrid',
+  //   title: 'StudentDataGrid',
+  //   icon: <SettingsIcon />,
+  // },
+  
+
   {
     kind: 'divider',
   },
@@ -129,26 +129,24 @@ const demoTheme = createTheme({
   },
 });
 
-
+function DemoPageContent({ pathname, onNavigate }) {
   switch (pathname) {
-    case '/signup':
-      return <Signup />;
-    case '/login':
-      return <Login />;
+    case '/studentdatagrid':
+      return <StudentDataGrid/>;
     case '/studentdetail':
       return <StudentDetails />;
     case '/dashboard':
       return (
-        <Box
-          sx={{
-            py: 4,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            textAlign: 'center',
-          }}
-        >
-          <Typography>Dashboard content for {pathname}</Typography>
+        <Box sx={{ py: 4, px: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Card sx={{ width: '100%', marginBottom: 2 }}>
+            <CardHeader title="Welcome to the Dashboard" />
+            <CardContent>
+              <Typography variant="body2" color="text.secondary">
+                Here you can manage your students and classes.
+              </Typography>
+            </CardContent>
+          </Card>
+          <StudentDataGrid onRowClick={(params) => onNavigate(`/studentdetail?id=${params.row.id}`)} /> {/* Pass the navigation handler */}
         </Box>
       );
     default:
@@ -165,12 +163,12 @@ export default function DashboardLayoutBasic(props: DemoProps) {
 
   const [pathname, setPathname] = React.useState('/');
 
-  const router = React.useMemo<Router>(() => {
+  const router = React.useMemo(() => {
     return {
       pathname,
       searchParams: new URLSearchParams(),
       navigate: (path) => {
-        setPathname(path); 
+        setPathname(String(path));
       },
     };
   }, [pathname]);
@@ -185,7 +183,7 @@ export default function DashboardLayoutBasic(props: DemoProps) {
       window={demoWindow}
     >
       <DashboardLayout>
-        <DemoPageContent pathname={pathname} />
+        <DemoPageContent pathname={pathname} onNavigate={router.navigate} /> {/* Pass navigate function */}
       </DashboardLayout>
     </AppProvider>
   );

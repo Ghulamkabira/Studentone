@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, Typography, Paper } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (email === 'admin@example.com' && password === 'password') {
-      alert('Login successful!');
+     
+      navigate("/dashboard"); // Navigate to dashboard after successful login
     } else {
       alert('Invalid login');
     }
@@ -20,19 +23,22 @@ const Login = () => {
       sx={{
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         height: '100vh',
-        backgroundColor: '#e0f7fa', 
+        paddingTop: '80px',
+        marginLeft:{xs:10,md:52}, // Adjusted padding for better appearance
+        paddingX: { xs: 2, md: 4 }, // Responsive horizontal padding
       }}
     >
       <Paper
         elevation={6}
         sx={{
-          padding: '40px',
-          width: '300px',
+          padding: { xs: 3, md: 5 }, // Responsive padding
+          width: { xs: '90%', sm: '400px' }, // Responsive width
           textAlign: 'center',
           borderRadius: '15px',
-          backgroundColor: '#ffffff', 
+          backgroundColor: '#ffffff',
+          boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)', // Softer shadow
         }}
       >
         <Typography variant="h5" gutterBottom sx={{ color: '#00695c' }}>
@@ -64,10 +70,10 @@ const Login = () => {
                   borderColor: '#009688',
                 },
                 '&:hover fieldset': {
-                  borderColor: '#00796b', 
+                  borderColor: '#00796b',
                 },
                 '&.Mui-focused fieldset': {
-                  borderColor: '#004d40', 
+                  borderColor: '#004d40',
                 },
               },
             }}
@@ -83,13 +89,13 @@ const Login = () => {
             sx={{
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {
-                  borderColor: '#009688', 
+                  borderColor: '#009688',
                 },
                 '&:hover fieldset': {
-                  borderColor: '#00796b', 
+                  borderColor: '#00796b',
                 },
                 '&.Mui-focused fieldset': {
-                  borderColor: '#004d40', 
+                  borderColor: '#004d40',
                 },
               },
             }}
@@ -99,12 +105,14 @@ const Login = () => {
             variant="contained"
             fullWidth
             sx={{
-              backgroundColor: '#009688', 
+              backgroundColor: '#009688',
               color: 'white',
               '&:hover': {
-                backgroundColor: '#00796b', 
+                backgroundColor: '#00796b',
               },
-              borderRadius: '8px', 
+              borderRadius: '8px',
+              fontSize: { xs: '14px', md: '16px' }, // Responsive font size
+              padding: '10px', // Padding for the button
             }}
           >
             Login

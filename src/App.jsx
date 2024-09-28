@@ -14,7 +14,7 @@ function App() {
       element: <Signup />
     },
     {
-      path: "/loginPage",
+      path: "/",
       element: <Login />
     },
     {
@@ -22,7 +22,7 @@ function App() {
       element: <StudentDetails />
     },
     {
-      path: "/", 
+      path: "/dashboard", 
       element: <DashboardLayoutBasic /> // Set the Content for the home route
     },
   ]);
