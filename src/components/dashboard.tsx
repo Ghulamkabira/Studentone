@@ -131,7 +131,7 @@ const demoTheme = createTheme({
 
 function DemoPageContent({ pathname, onNavigate }) {
   switch (pathname) {
-    case '/studentdatagrid':
+    case '/':
       return <StudentDataGrid/>;
     case '/studentdetail':
       return <StudentDetails />;

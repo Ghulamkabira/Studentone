@@ -3,9 +3,14 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Login from './components/LoginPage';
 import Signup from './components/Signup';
 import StudentDetails from './components/Studentdetail';
+import StudentDataGrid from './components/StudentDataGrid';
 import Content from './components/Content';
 import { Box } from '@mui/material';
 import DashboardLayoutBasic from './components/dashboard';
+import ProtectedRoute from './components/auth/ProtectedRoute';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
+const clientId = 'YOUR_GOOGLE_CLIENT_ID'; // Replace with your actual Google client ID
 
 function App() {
   const router = createBrowserRouter([
@@ -14,8 +19,12 @@ function App() {
       element: <Signup />
     },
     {
-      path: "/",
+      path: "/login",
       element: <Login />
+    },
+    {
+      path: "/",
+      element: <StudentDataGrid/>
     },
     {
       path: "/studentdetail",
@@ -23,16 +32,18 @@ function App() {
     },
     {
       path: "/dashboard", 
-      element: <DashboardLayoutBasic /> // Set the Content for the home route
+      element: (
+        <ProtectedRoute>
+          <DashboardLayoutBasic />
+        </ProtectedRoute>
+      ) // Protect the Dashboard route
     },
   ]);
 
   return (
-    <>
-    
-    <RouterProvider router={router}/>
-    </>
-
+    <GoogleOAuthProvider clientId={clientId}>
+      <RouterProvider router={router}/>
+    </GoogleOAuthProvider>
   );
 }
 

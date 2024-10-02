@@ -1,21 +1,51 @@
 import React, { useState } from 'react';
-import { TextField, Button, Box, Typography, Paper } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { TextField, Button, Box, Typography, Paper, InputAdornment, IconButton } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import axios from 'axios';
+import { GoogleLogin } from '@react-oauth/google';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (email === 'admin@example.com' && password === 'password') {
-     
-      navigate("/dashboard"); // Navigate to dashboard after successful login
-    } else {
+    const payload = { email, password };
+    try {
+      const senddata = await axios.post('http://localhost:8000/api/login/', payload);
+      if (senddata.status === 200) {
+        const token = senddata.data.access;
+        localStorage.setItem('accessTokens', token);
+        navigate("/dashboard");
+      }
+    } catch (error) {
       alert('Invalid login');
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleGoogleLoginSuccess = async (response) => {
+    const { credential } = response;
+    try {
+      const senddata = await axios.post('http://localhost:8000/api/google-login/', { token: credential });
+      if (senddata.status === 200) {
+        const token = senddata.data.access;
+        localStorage.setItem('accessTokens', token);
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      alert('Google login failed. Please try again.');
+    }
+  };
+
+  const handleGoogleLoginError = () => {
+    alert('Google login failed.');
   };
 
   return (
@@ -26,19 +56,19 @@ const Login = () => {
         alignItems: 'flex-start',
         height: '100vh',
         paddingTop: '80px',
-        marginLeft:{xs:10,md:52}, // Adjusted padding for better appearance
-        paddingX: { xs: 2, md: 4 }, // Responsive horizontal padding
+        marginLeft: { xs: 10, md: 70 },
+        paddingX: { xs: 2, md: 4 },
       }}
     >
       <Paper
         elevation={6}
         sx={{
-          padding: { xs: 3, md: 5 }, // Responsive padding
-          width: { xs: '90%', sm: '400px' }, // Responsive width
+          padding: { xs: 3, md: 5 },
+          width: { xs: '90%', sm: '400px' },
           textAlign: 'center',
           borderRadius: '15px',
           backgroundColor: '#ffffff',
-          boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)', // Softer shadow
+          boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
         }}
       >
         <Typography variant="h5" gutterBottom sx={{ color: '#00695c' }}>
@@ -81,11 +111,24 @@ const Login = () => {
           <TextField
             label="Password"
             variant="outlined"
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             fullWidth
             required
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={togglePasswordVisibility}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
             sx={{
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {
@@ -111,13 +154,47 @@ const Login = () => {
                 backgroundColor: '#00796b',
               },
               borderRadius: '8px',
-              fontSize: { xs: '14px', md: '16px' }, // Responsive font size
-              padding: '10px', // Padding for the button
+              fontSize: { xs: '14px', md: '16px' },
+              padding: '10px',
             }}
           >
             Login
           </Button>
         </Box>
+
+        {/* Google Login Button */}
+        <GoogleLogin
+          onSuccess={handleGoogleLoginSuccess}
+          onError={handleGoogleLoginError}
+          render={(renderProps) => (
+            <Button
+              onClick={renderProps.onClick}
+              disabled={renderProps.disabled}
+              variant="contained"
+              fullWidth
+              sx={{
+                backgroundColor: '#db4437',
+                color: 'white',
+                '&:hover': {
+                  backgroundColor: '#c23321',
+                },
+                borderRadius: '8px',
+                mt: 2,
+              }}
+            >
+              Login with Google
+            </Button>
+          )}
+        />
+
+        <Typography sx={{ mt: 2 }}>
+          Don't have an account?{' '}
+          <Link to="/signup">
+            <Button variant="text" color="primary">
+              Sign Up
+            </Button>
+          </Link>
+        </Typography>
       </Paper>
     </Box>
   );
