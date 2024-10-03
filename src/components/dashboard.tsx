@@ -168,7 +168,7 @@ export default function DashboardLayoutBasic({ onLogout }) {
     setPathname('/login'); // Redirect to the login page
   };
 
-  // Redirect to the dashboard after login
+
   React.useEffect(() => {
     const currentPath = window.location.pathname;
     if (currentPath === '/login') {
