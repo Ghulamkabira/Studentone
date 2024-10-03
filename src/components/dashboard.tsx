@@ -164,9 +164,8 @@ export default function DashboardLayoutBasic({ onLogout }) {
 
   // Logout handler
   const handleLogout = () => {
-    onLogout(); // Call the onLogout function passed via props
-    setPathname('/login'); // Redirect to the login page
-  };
+    onLogout(); 
+    setPathname('/login'); 
 
 
   React.useEffect(() => {
