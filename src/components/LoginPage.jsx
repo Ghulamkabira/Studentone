@@ -5,7 +5,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import axios from 'axios';
 import { GoogleLogin } from '@react-oauth/google';
 
-const Login = () => {
+const Login = ({ onLogin }) => { // Receive onLogin as a prop
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -19,7 +19,12 @@ const Login = () => {
       if (senddata.status === 200) {
         const token = senddata.data.access;
         localStorage.setItem('accessTokens', token);
-        navigate("/dashboard");
+        
+        // Call the onLogin function to update the authentication state
+        onLogin(); 
+
+        // Navigate to the dashboard after successful login
+        navigate("/");
       }
     } catch (error) {
       alert('Invalid login');
@@ -37,7 +42,12 @@ const Login = () => {
       if (senddata.status === 200) {
         const token = senddata.data.access;
         localStorage.setItem('accessTokens', token);
-        navigate("/dashboard");
+        
+        // Call the onLogin function to update the authentication state
+        onLogin();
+
+        // Navigate to the dashboard after successful Google login
+        navigate("/");
       }
     } catch (error) {
       alert('Google login failed. Please try again.');

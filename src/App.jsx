@@ -2,17 +2,28 @@ import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Login from './components/LoginPage';
 import Signup from './components/Signup';
-import StudentDetails from './components/Studentdetail';
+import AddStudent from './components/add_students';
 import StudentDataGrid from './components/StudentDataGrid';
-import Content from './components/Content';
 import { Box } from '@mui/material';
 import DashboardLayoutBasic from './components/dashboard';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { useNavigate } from 'react-router-dom';
+import NewAdmission from './components/New_Admission';
+import Classes from './components/Classes';
+
 
 const clientId = 'YOUR_GOOGLE_CLIENT_ID'; // Replace with your actual Google client ID
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+  
+  const handleLogout = () => {
+    // Clear tokens and update authentication state
+    localStorage.removeItem('accessTokens');
+    setIsAuthenticated(false); // Set to false to indicate user is logged out
+  };
+
   const router = createBrowserRouter([
     {
       path: "/signup",
@@ -20,21 +31,30 @@ function App() {
     },
     {
       path: "/login",
-      element: <Login />
+      element: <Login onLogin={() => setIsAuthenticated(true)} />
     },
     {
-      path: "/",
-      element: <StudentDataGrid/>
+      path: "/students",
+      element: <StudentDataGrid />
+    },
+  
+    {
+      path: "/addstudent",
+      element: <AddStudent />
     },
     {
-      path: "/studentdetail",
-      element: <StudentDetails />
+      path: "newadmission",
+      element: <NewAdmission />
+    }, 
+    {
+      path: "classes",
+      element: <Classes />
     },
     {
-      path: "/dashboard", 
+      path: "/", 
       element: (
-        <ProtectedRoute>
-          <DashboardLayoutBasic />
+        <ProtectedRoute isAuthenticated={isAuthenticated}>
+          <DashboardLayoutBasic onLogout={handleLogout} />
         </ProtectedRoute>
       ) // Protect the Dashboard route
     },
