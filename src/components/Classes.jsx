@@ -13,7 +13,7 @@ import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
 
 const Classes = () => {
-    // Sample data
+    
     const classesData = [
         {
             id: 1,
