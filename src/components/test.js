@@ -46,7 +46,7 @@ const StudentDataGrid = ({ onRowClick }) => {
               border: 'none', // Remove default border
             },
             '& .MuiDataGrid-cell': {
-            //   bgcolor: '#ffcc80', // Bright orange background for cells
+          
               color: '#000', // Black text for readability
             },
             '& .MuiDataGrid-cell:hover': {
