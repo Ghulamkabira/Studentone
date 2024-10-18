@@ -17,7 +17,13 @@ import CardHeader from '@mui/material/CardHeader';
 import StudentDataGrid from './StudentDataGrid'; // Ensure this path is correct
 import NewAdmission from './New_Admission';
 import Classes from './Classes';
-
+import AddClass from './add_class';
+import AttendanceReports from './attendance_reports';
+import GradesReports from './grades_reports';
+import Signup from './Signup';
+import Login from './LoginPage';
+import ClassStudentsChart from './class_student';
+import StudentMarksGraph from './Student_Marks';
 // Navigation items
 const NAVIGATION = [
   {
@@ -59,7 +65,7 @@ const NAVIGATION = [
     icon: <ClassIcon />,
   },
   {
-    segment: 'add-class',
+    segment: 'addclass',
     title: 'Add Class',
     icon: <ClassIcon />,
   },
@@ -77,7 +83,7 @@ const NAVIGATION = [
   },
   {
     segment: 'grades-reports',
-    title: 'Grades Reports',
+    title: 'GradesReports',
     icon: <AssessmentIcon />,
   },
   {
@@ -139,14 +145,38 @@ function DemoPageContent({ pathname, onNavigate }) {
             </CardContent>
           </Card>
           <StudentDataGrid onRowClick={(params) => onNavigate(`/studentdetail?id=${params.row.id}`)} />
+          <Box 
+             sx={{ width: '100%', marginTop: 4 }}>
+            <Card>
+              <CardHeader title="Class vs Students Chart" />
+              <CardContent>
+                <ClassStudentsChart />
+              </CardContent>
+            </Card>
+          </Box>
+          <Box 
+             sx={{ width: '100%', marginTop: 6 }}>
+            <Card>
+              <CardHeader title="Student Marks Chart" />
+              <CardContent>
+                <StudentMarksGraph />
+              </CardContent>
+            </Card>
+          </Box>
         </Box>
       );
-    case '/newadmission':
-      return <NewAdmission />;
-    case '/addstudent':
-      return <AddStudent />;
-    case '/classes':
-      return <Classes />;
+        case '/newadmission':
+         return <NewAdmission />;
+        case '/addstudent':
+         return <AddStudent />;
+        case '/classes':
+         return <Classes />;
+        case '/addclass':
+         return <AddClass />;
+        case '/attendance-reports':
+          return <AttendanceReports />;
+        case'/grades-reports':
+          return<GradesReports/>;
 
     default:
       return <Typography variant="h6" color="error">404 - Page Not Found</Typography>;
@@ -166,7 +196,7 @@ export default function DashboardLayoutBasic({ onLogout }) {
   const handleLogout = () => {
     onLogout(); 
     setPathname('/login'); 
-
+  }
 
   React.useEffect(() => {
     const currentPath = window.location.pathname;
@@ -174,6 +204,7 @@ export default function DashboardLayoutBasic({ onLogout }) {
       setPathname('/dashboard');
     }
   }, []);
+  
 
   return (
     <AppProvider

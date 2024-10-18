@@ -2,7 +2,7 @@ import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import { type } from 'os';
+
 
 const rows = [
   { id: 1, name: 'John Doe', age: 20, email: 'john@example.com', session: '2024', grade: 'A' },

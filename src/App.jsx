@@ -11,6 +11,9 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import NewAdmission from './components/New_Admission';
 import Classes from './components/Classes';
+import AddClass from './components/add_class';
+import AttendanceReports from './components/attendance_reports';
+import GradesReports from './components/grades_reports';
 
 
 const clientId = 'YOUR_GOOGLE_CLIENT_ID'; // Replace with your actual Google client ID
@@ -49,6 +52,18 @@ function App() {
     {
       path: "classes",
       element: <Classes />
+    },
+    {
+      path: "/addclass",
+      element: <AddClass />
+    },
+    {
+      path:"/attendance-reports",
+      element:<AttendanceReports/>
+    },
+    {
+      path:"/grades-reports",
+      element:<GradesReports/>
     },
     {
       path: "/", 

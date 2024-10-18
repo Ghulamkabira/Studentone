@@ -93,7 +93,7 @@ const AddStudent = () => {
         }}
       >
         <Typography variant="h4" gutterBottom sx={{ color: '#1e88e5' }}>
-          Manage Students
+          Add Students
         </Typography>
 
         <form onSubmit={formik.handleSubmit}>
@@ -222,16 +222,7 @@ const AddStudent = () => {
           <Button
             variant="contained"
             type="submit"
-            sx={{
-              backgroundColor: '#42a5f5',
-              color: 'white',
-              padding: '10px 20px',
-              fontSize: '16px',
-              borderRadius: '8px',
-              '&:hover': {
-                backgroundColor: '#1e88e5',
-              },
-            }}
+            color="success"
           >
             Add Student
           </Button>
